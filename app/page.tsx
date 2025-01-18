@@ -56,10 +56,12 @@ export default function Home() {
     }, {});
   }, [filteredDrugs]);
 
-  const getMonthsUntil = (date) => {
-    const diff = new Date(date) - new Date();
-    return Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24 * 30.44)));
-  };
+ const getMonthsUntil = (date: string) => {
+  const targetDate = new Date(date);
+  const currentDate = new Date();
+  const diff = targetDate.getTime() - currentDate.getTime();
+  return Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24 * 30.44)));
+};
 
   return (
     <main className="min-h-screen bg-gray-50">
