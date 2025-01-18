@@ -39,7 +39,7 @@ export default function Home() {
   });
 
   // Group drugs by year with proper typing
-  const groupedDrugs = filteredDrugs.reduce<GroupedDrugs>((acc, drug) => {
+  const groupedDrugs = filteredDrugs.reduce((acc: { [key: number]: DrugData[] }, drug) => {
     const year = new Date(drug.patentExpiration).getFullYear();
     if (!acc[year]) acc[year] = [];
     acc[year].push(drug);
