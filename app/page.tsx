@@ -33,7 +33,27 @@ const patentData = [
     significance: 'high',
     status: 'Patent Protected'
   }
+    type DrugData = {
+    id: number;
+    name: string;
+    genericName: string;
+    patentExpiration: string;
+    indication: string;
+    category: string;
+    manufacturer: string;
+    currentPrice: number;
+    estimatedSavings: string;
+    estimatedGenericPrice: number;
+    significance: string;
+    status: string;
+}
+};
+
+// Update the patentData constant declaration
+const patentData: DrugData[] = [
+  // ... existing data ...
 ];
+
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -47,14 +67,15 @@ export default function Home() {
   }, [searchQuery]);
 
   // Group drugs by year
-  const groupedDrugs = useMemo(() => {
-    return filteredDrugs.reduce((acc, drug) => {
-      const year = new Date(drug.patentExpiration).getFullYear();
-      if (!acc[year]) acc[year] = [];
-      acc[year].push(drug);
-      return acc;
-    }, {});
-  }, [filteredDrugs]);
+  // Group drugs by year
+const groupedDrugs = useMemo(() => {
+  return filteredDrugs.reduce<Record<number, typeof patentData>>((acc, drug) => {
+    const year = new Date(drug.patentExpiration).getFullYear();
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(drug);
+    return acc;
+  }, {});
+}, [filteredDrugs]);
 
  const getMonthsUntil = (date: string) => {
   const targetDate = new Date(date);
